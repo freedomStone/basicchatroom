@@ -18,11 +18,12 @@ public:
     void run() override{
         int sockfd = connectSocket();
         clientChat(sockfd);
+        close(sockfd);
     }
 
 protected:
-    int connectSocket() override{}
-    int clientChat(int sockfd) override{}; 
+    int connectSocket() override;
+    void clientChat(int sockfd) override; 
 };
 
 

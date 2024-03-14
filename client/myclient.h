@@ -53,7 +53,7 @@ protected:
     //virtual void login()=0;
 
     //聊天
-    virtual int clientChat(int sockfd)=0;
+    virtual void clientChat(int sockfd)=0;
 
 };
 

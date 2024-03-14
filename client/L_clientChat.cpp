@@ -4,7 +4,7 @@
 
 #include "./myclientLinux.h"
 
-int MyClientLinux::clientChat(int sockfd){
+void MyClientLinux::clientChat(int sockfd){
     char read_buf[BUFFER_SIZE] = {'\0'};
 
     pollfd fds[2];
@@ -16,11 +16,11 @@ int MyClientLinux::clientChat(int sockfd){
     fds[1].revents = 0;
 
     int pipefd[2];
-    bool whilestatus = pipe(pipefd) && (sockfd >= 0);
-    
+    pipe(pipefd);
+
     int ret;
     
-    while (whilestatus)
+    while (true)
     {
         ret = poll(fds,2,-1);
         if(ret < 0){
@@ -43,7 +43,4 @@ int MyClientLinux::clientChat(int sockfd){
         }
     }
 
-    close(sockfd); 
-
-    return 0;
 }

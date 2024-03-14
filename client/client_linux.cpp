@@ -4,8 +4,6 @@
 
 #include "myclientLinux.h"
 
-using namespace std;
-
 int main(int argc,char *argv[]){
     //设定服务器地址
     const std::string ipstr = (argc > 1)?argv[1]:"127.0.0.1";
@@ -19,6 +17,6 @@ int main(int argc,char *argv[]){
         return errno;
     }
     
-    cout<<"BasicChatroom v0.1"<<endl;
+    std::cout<<"BasicChatroom v0.1"<<std::endl;
     return 0;
 }

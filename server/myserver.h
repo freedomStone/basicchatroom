@@ -26,17 +26,33 @@
     std::cout<<"Unknown Platform!"<<std::endl;
 #endif
 
+#define BUFFER_SIZE 64 /*读缓冲区大小*/
+#define USER_LIMIT 5 /*最大用户数量*/
 
-//客户端功能基类
+//客户数据结构
+struct client_data{
+    sockaddr_in address;
+    char* write_buf;
+    char buf[BUFFER_SIZE];
+};
+
+
+//服务端功能基类
 class MyServer{ 
 public:
     //构造函数
-    MyServer(){}
+    MyServer(int port){
+        memset(&address,0,sizeof(address));
+        address.sin_family = AF_INET;
+        address.sin_port = htons(port);
+        std::string ipstr = "127.0.0.1";
+        inet_pton(AF_INET,ipstr.c_str(),&(address.sin_addr));
+    }
 
     //析构
     virtual ~MyServer(){};
 
-    //客户端运行实现
+    //服务端运行实现
     virtual void run()=0;
     
 protected:
@@ -45,17 +61,15 @@ protected:
     //创建socket
     virtual int createSocket()=0;
     //绑定socket
-    virtual void bindSocket(int sockfd,int port)=0;
+    virtual void bindSocket(int sockfd)=0;
     //监听
     virtual void listenSocket(int sockfd,int backlog)=0;
-    //接受
-    virtual int acceptRequest(int sockfd)=0;
 
     //登录
     //virtual void login()=0;
 
     //聊天后台
-    virtual int serverChat(int sockfd)=0;
+    virtual void serverChat(int sockfd)=0;
 
 };
 
